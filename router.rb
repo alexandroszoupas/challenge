@@ -23,7 +23,7 @@ class Router
     when 2 then @controller.index
     when 3 then @controller.destroy
     when 4 then @controller.edit
-    when 5 then @controller.list_by_type
+    when 5 then @controller.list_by_size
     when 6 then @controller.list_by_brand
     when 7 then @controller.recover
     when 8 then @controller.remove
@@ -38,13 +38,13 @@ class Router
   def actions
     [
       "Add battery to inventory",
-      "List all batteries",
+      "List all (active) batteries",
       "Delete a battery",
-      "Edit a battery type",
-      "List battery by type",
+      "Edit a battery",
+      "List battery by size",
       "List battery by brand",
-      "Recover battery",
-      "Remove battery from inventory",
+      "Recover battery (undelete)",
+      "Remove battery from inventory (set count = 0)",
       "Exit the app"
     ]
   end

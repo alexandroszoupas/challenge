@@ -1,7 +1,11 @@
 class BatteriesView
   def display(batteries)
     batteries.each do |battery|
-      puts "index: #{battery.id} | name: #{battery.name}| brand: #{battery.brand}| voltage: #{battery.voltage} V | life_cycle: #{battery.life_cycle} hrs | deleted: #{battery.deleted} | count:#{battery.count}"
+      if battery.deleted.nil?
+        puts "index: #{battery.id} | size: #{battery.size}| brand: #{battery.brand}| count:#{battery.count} | voltage: #{battery.voltage} V | life cycle: #{battery.life_cycle} charges"
+      else
+        puts "index: #{battery.id} | size: #{battery.size}| brand: #{battery.brand}| count:#{battery.count} | voltage: #{battery.voltage} V | life cycle: #{battery.life_cycle} charges | deleted: #{battery.deleted} | reason for deletion: #{battery.deletion_comment}"
+      end
     end
   end
 
@@ -19,7 +23,7 @@ class BatteriesView
   def delete_battery
     array = []
     index = find_index
-    puts 'What is the reason to delete this battery type?'
+    puts 'What is the reason to delete this battery size?'
     reason = gets.chomp
     array << index
     array << reason
@@ -29,6 +33,6 @@ class BatteriesView
   def find_by_filter(attribute)
     puts "What is the battery #{attribute}?"
     print '>'
-    gets.chomp
+    gets.chomp.upcase
   end
 end

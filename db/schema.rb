@@ -10,20 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_10_132119) do
+ActiveRecord::Schema.define(version: 2022_06_13_110515) do
 
   create_table "batteries", force: :cascade do |t|
-    t.string "name"
+    t.string "size"
     t.string "brand"
-    t.integer "voltage", default: 0
+    t.float "voltage", default: 0.0
     t.integer "life_cycle", default: 0
+    t.integer "count"
+    t.datetime "deleted"
+    t.string "deletion_comment"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "deleted", default: 0
-    t.integer "count", default: 0
-    t.string "deletion_comment"
-    t.integer "imported_at"
-    t.integer "exported_at"
   end
 
 end

@@ -1,5 +1,6 @@
-require_relative "../views/batteries_view"
-require_relative "../models/battery"
+require_relative '../views/batteries_view'
+require_relative '../models/battery'
+require 'date'
 
 class BatteriesController
   def initialize
@@ -7,41 +8,41 @@ class BatteriesController
   end
 
   def index
-    batteries = Battery.all
+    batteries = Battery.all.where(deleted: nil)
     @batteries_view.display(batteries)
   end
 
   def create
-    name = @batteries_view.battery(:name)
+    size = @batteries_view.battery(:size)
     brand = @batteries_view.battery(:brand)
     voltage = @batteries_view.battery(:voltage)
     life_cycle = @batteries_view.battery(:life_cycle)
     count = @batteries_view.battery(:count)
-    Battery.create(name: name.to_s, brand: brand.to_s, voltage: voltage, life_cycle: life_cycle.to_i, count: count.to_i)
+    Battery.create(size: size.to_s, brand: brand.to_s, voltage: voltage, life_cycle: life_cycle.to_i, count: count.to_i)
   end
 
   def edit
     index
     id = @batteries_view.find_index
-    name = @batteries_view.battery(:name)
+    size = @batteries_view.battery(:size)
     brand = @batteries_view.battery(:brand)
     voltage = @batteries_view.battery(:voltage)
     life_cycle = @batteries_view.battery(:life_cycle)
     battery = Battery.find(id)
-    assign(battery, name, brand, voltage, life_cycle)
+    assign(battery, size, brand, voltage, life_cycle)
   end
 
-  def assign(battery, name, brand, voltage, life_cycle)
-    battery.name = name
+  def assign(battery, size, brand, voltage, life_cycle)
+    battery.size = size
     battery.brand = brand
     battery.voltage = voltage
     battery.life_cycle = life_cycle
     battery.save
   end
 
-  def list_by_type
-    name = @batteries_view.find_by_filter(:name)
-    batteries = Battery.where(name: name)
+  def list_by_size
+    size = @batteries_view.find_by_filter(:size)
+    batteries = Battery.where(size: size)
     @batteries_view.display(batteries)
   end
 
@@ -52,16 +53,16 @@ class BatteriesController
   end
 
   def destroy
-    id = @batteries_view.delete_battery[0]
-    battery = Battery.find(id)
-    battery.deleted = 1
-    deleted_comment = @batteries_view.delete_battery[1]
+    array = @batteries_view.delete_battery
+    battery = Battery.find(array[0])
+    battery.deleted = Time.now.getutc
+    deleted_comment = array[1]
     battery.deletion_comment = deleted_comment
     battery.save
   end
 
   def list_deleted
-    batteries = Battery.where(deleted: 1)
+    batteries = Battery.where.not(deleted: nil)
     @batteries_view.display(batteries)
   end
 
@@ -69,7 +70,8 @@ class BatteriesController
     list_deleted
     id = @batteries_view.find_index
     battery = Battery.find(id)
-    battery.deleted = 0
+    battery.deleted = nil
+    battery.deletion_comment = nil
     battery.save
   end
 
