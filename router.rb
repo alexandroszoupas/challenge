@@ -1,4 +1,4 @@
-require_relative "app/contollers/batteries_controller"
+require_relative "app/controllers/batteries_controller"
 
 class Router
   def initialize
