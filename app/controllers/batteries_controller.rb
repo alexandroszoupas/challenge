@@ -27,14 +27,16 @@ class BatteriesController
     size = @batteries_view.battery(:size)
     brand = @batteries_view.battery(:brand)
     voltage = @batteries_view.battery(:voltage)
+    count = @batteries_view.battery(:count)
     life_cycle = @batteries_view.battery(:life_cycle)
     battery = Battery.find(id)
-    assign(battery, size, brand, voltage, life_cycle)
+    assign(battery, size, brand, count, voltage, life_cycle)
   end
 
-  def assign(battery, size, brand, voltage, life_cycle)
+  def assign(battery, size, brand, count, voltage, life_cycle)
     battery.size = size
     battery.brand = brand
+    battery.count = count
     battery.voltage = voltage
     battery.life_cycle = life_cycle
     battery.save
