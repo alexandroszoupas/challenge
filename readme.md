@@ -15,7 +15,7 @@ Running this project in a new environment:
 Running this project in replit:
 
 In the console run:
-- ruby app.rb
+- bundle exec ruby app.rb
 
 What can you do in the battery inventory project:
 
